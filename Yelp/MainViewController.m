@@ -8,7 +8,7 @@
 
 #import "MainViewController.h"
 #import "YelpClient.h"
-#import "RestaurantViewCell.h"
+#import "Business.h"
 
 NSString * const kYelpConsumerKey = @"-6pfJLti5emvMGEXT_KCHw";
 NSString * const kYelpConsumerSecret = @"jldy5n1-aFH8oT6kUPaFt-nlXYI";
@@ -50,7 +50,7 @@ NSString * const kYelpTokenSecret = @"fcCaYeNRmUvYB7uZ7--23v72lG4";
     [self.client searchWithTerm:@"Thai" success:^(AFHTTPRequestOperation *operation, id response) {
         NSLog(@"response: %@", response);
         self.data = response;
-        self.businesses = self.data[@"businesses"];
+        self.businesses = [Business businessesWithDictionaries:self.data[@"businesses"]];
         [self.tableView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"error: %@", [error description]);

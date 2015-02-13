@@ -9,6 +9,7 @@
 #import "MainViewController.h"
 #import "YelpClient.h"
 #import "Business.h"
+#import "BusinessCell.h"
 
 NSString * const kYelpConsumerKey = @"-6pfJLti5emvMGEXT_KCHw";
 NSString * const kYelpConsumerSecret = @"jldy5n1-aFH8oT6kUPaFt-nlXYI";
@@ -33,6 +34,15 @@ NSString * const kYelpTokenSecret = @"fcCaYeNRmUvYB7uZ7--23v72lG4";
     if (self) {
         // You can register for Yelp API keys here: http://www.yelp.com/developers/manage_api_keys
         self.client = [[YelpClient alloc] initWithConsumerKey:kYelpConsumerKey consumerSecret:kYelpConsumerSecret accessToken:kYelpToken accessSecret:kYelpTokenSecret];
+
+        [self.client searchWithTerm:@"Thai" success:^(AFHTTPRequestOperation *operation, id response) {
+            NSLog(@"response: %@", response);
+            self.data = response;
+            self.businesses = [Business businessesWithDictionaries:self.data[@"businesses"]];
+            [self.tableView reloadData];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"error: %@", [error description]);
+        }];
     }
 
     return self;
@@ -40,21 +50,13 @@ NSString * const kYelpTokenSecret = @"fcCaYeNRmUvYB7uZ7--23v72lG4";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"Yelp";
+
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
 
-    UINib *restaurantViewCellNib = [UINib nibWithNibName:@"RestaurantViewCell" bundle:nil];
-    [self.tableView registerNib:restaurantViewCellNib forCellReuseIdentifier:@"RestaurantViewCell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"BusinessCell" bundle:nil] forCellReuseIdentifier:@"BusinessCell"];
     self.tableView.rowHeight = UITableViewAutomaticDimension;
-
-    [self.client searchWithTerm:@"Thai" success:^(AFHTTPRequestOperation *operation, id response) {
-        NSLog(@"response: %@", response);
-        self.data = response;
-        self.businesses = [Business businessesWithDictionaries:self.data[@"businesses"]];
-        [self.tableView reloadData];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"error: %@", [error description]);
-    }];
 }
 
 #pragma mark - Table view methods
@@ -64,8 +66,8 @@ NSString * const kYelpTokenSecret = @"fcCaYeNRmUvYB7uZ7--23v72lG4";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    RestaurantViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RestaurantViewCell" forIndexPath:indexPath];
-    [cell setBusinessData:self.businesses[indexPath.row]];
+    BusinessCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BusinessCell" forIndexPath:indexPath];
+    cell.business = self.businesses[indexPath.row];
     return cell;
 }
 

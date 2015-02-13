@@ -19,10 +19,10 @@ const CGFloat MILES_PER_METER = 0.000621371192;
     if (self) {
         self.thumbImageUrl = dictionary[@"image_url"];
         self.name = dictionary[@"name"];
-        self.ratingImageUrl = dictionary[@"rating_image_url"];
-        self.numReviews = (NSInteger) dictionary[@"review_count"];
+        self.ratingImageUrl = dictionary[@"rating_img_url"];
+        self.numReviews = [dictionary[@"review_count"] integerValue];
 
-        NSString *street = [dictionary valueForKeyPath:@"location.address"];
+        NSString *street = [dictionary valueForKeyPath:@"location.address"][0];
         NSString *neighborhood = [dictionary valueForKeyPath:@"location.neighborhoods"][0];
         self.address = [NSString stringWithFormat:@"%@, %@", street, neighborhood];
 
@@ -44,10 +44,11 @@ const CGFloat MILES_PER_METER = 0.000621371192;
     NSMutableArray *businesses = [NSMutableArray array];
 
     for (NSDictionary *dictionary in dictionaries) {
-        Business *business = [[Business alloc] init];
-
+        Business *business = [[Business alloc] initWithDictionary:dictionary];
         [businesses addObject:business];
     }
+
+    return businesses;
 }
 
 @end

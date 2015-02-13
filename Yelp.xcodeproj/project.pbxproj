@@ -25,6 +25,7 @@
 		63E591F41F684901AF8C1C19 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DEC6D18C14F46F8AF2EA320 /* libPods.a */; };
 		9FEF08A21A8C8DFE0055F302 /* RestaurantViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FEF08A01A8C8DFE0055F302 /* RestaurantViewCell.m */; };
 		9FEF08A31A8C8DFE0055F302 /* RestaurantViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FEF08A11A8C8DFE0055F302 /* RestaurantViewCell.xib */; };
+		9FFF28221A8D821C00131EC3 /* Business.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FFF28211A8D821C00131EC3 /* Business.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,8 @@
 		9FEF089F1A8C8DFE0055F302 /* RestaurantViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RestaurantViewCell.h; sourceTree = "<group>"; };
 		9FEF08A01A8C8DFE0055F302 /* RestaurantViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RestaurantViewCell.m; sourceTree = "<group>"; };
 		9FEF08A11A8C8DFE0055F302 /* RestaurantViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RestaurantViewCell.xib; sourceTree = "<group>"; };
+		9FFF28201A8D821C00131EC3 /* Business.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Business.h; sourceTree = "<group>"; };
+		9FFF28211A8D821C00131EC3 /* Business.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Business.m; sourceTree = "<group>"; };
 		FFD2D8D9EE442726B3880917 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -146,6 +149,7 @@
 		42FD6C5018DC286B000BF2B9 /* Yelp */ = {
 			isa = PBXGroup;
 			children = (
+				9FFF281F1A8D821100131EC3 /* Models */,
 				9FEF089E1A8C8DED0055F302 /* Views */,
 				420474F318DC297600E88E07 /* API */,
 				420474F718DC2A9200E88E07 /* View Controllers */,
@@ -203,6 +207,15 @@
 				9FEF08A11A8C8DFE0055F302 /* RestaurantViewCell.xib */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		9FFF281F1A8D821100131EC3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				9FFF28201A8D821C00131EC3 /* Business.h */,
+				9FFF28211A8D821C00131EC3 /* Business.m */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -340,6 +353,7 @@
 				42FD6C5B18DC286B000BF2B9 /* AppDelegate.m in Sources */,
 				42FD6C5718DC286B000BF2B9 /* main.m in Sources */,
 				420474F618DC299500E88E07 /* YelpClient.m in Sources */,
+				9FFF28221A8D821C00131EC3 /* Business.m in Sources */,
 				9FEF08A21A8C8DFE0055F302 /* RestaurantViewCell.m in Sources */,
 				420474FB18DC2B2100E88E07 /* MainViewController.m in Sources */,
 			);

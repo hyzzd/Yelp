@@ -7,17 +7,20 @@
 //
 
 #import "RestaurantViewCell.h"
+#import "UIImageView+AFNetworking.h"
+
+@interface RestaurantViewCell ()
+
+@property (weak, nonatomic) IBOutlet UIImageView *thumbImageView;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+
+@end
 
 @implementation RestaurantViewCell
 
-- (void)awakeFromNib {
-    // Initialization code
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
+- (void)setBusinessData:(NSDictionary *)businessData {
+    [self.thumbImageView setImageWithURL:[NSURL URLWithString:businessData[@"image_url"]]];
+    self.nameLabel.text = businessData[@"name"];
 }
 
 @end

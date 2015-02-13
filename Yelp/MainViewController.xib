@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController">
             <connections>
+                <outlet property="tableView" destination="Dlh-cK-a3R" id="j4v-WV-YS5"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -24,8 +25,12 @@
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="Dlh-cK-a3R" secondAttribute="bottom" id="34S-R6-GT5"/>
                 <constraint firstItem="Dlh-cK-a3R" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="6O7-L5-2Ca"/>
+                <constraint firstAttribute="bottom" secondItem="Dlh-cK-a3R" secondAttribute="bottom" id="LYe-pS-exb"/>
+                <constraint firstItem="Dlh-cK-a3R" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="MGS-Y2-1z3"/>
                 <constraint firstItem="Dlh-cK-a3R" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="WKh-4X-47k"/>
+                <constraint firstItem="Dlh-cK-a3R" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="fEA-UY-2Qh"/>
                 <constraint firstAttribute="trailing" secondItem="Dlh-cK-a3R" secondAttribute="trailing" id="j4l-2g-TRa"/>
+                <constraint firstAttribute="trailing" secondItem="Dlh-cK-a3R" secondAttribute="trailing" id="x81-WC-osI"/>
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
         </view>

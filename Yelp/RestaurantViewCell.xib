@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -15,17 +14,40 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UtE-n5-XHl">
-                        <rect key="frame" x="8" y="7" width="60" height="60.5"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eep-Wg-PdF">
+                        <rect key="frame" x="8" y="8" width="60" height="59.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="60" id="LkP-Tz-5hv"/>
+                            <constraint firstAttribute="height" constant="60" id="Zdy-Th-6Qu"/>
+                        </constraints>
                     </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3hX-mw-a2r">
+                        <rect key="frame" x="76" y="8" width="30.5" height="16"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="16" id="AoD-hG-CUO"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="UtE-n5-XHl" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="Hmr-GC-OEm"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="UtE-n5-XHl" secondAttribute="bottom" constant="-1" id="Nf0-uR-21N"/>
-                    <constraint firstItem="UtE-n5-XHl" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-1" id="Zid-ZL-jvQ"/>
+                    <constraint firstItem="eep-Wg-PdF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="NQN-nO-fkr"/>
+                    <constraint firstItem="3hX-mw-a2r" firstAttribute="leading" secondItem="eep-Wg-PdF" secondAttribute="trailing" constant="8" id="NTT-Mu-onC"/>
+                    <constraint firstItem="eep-Wg-PdF" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="aAh-22-HZz"/>
+                    <constraint firstItem="3hX-mw-a2r" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="afw-lr-DtT"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="nameLabel" destination="3hX-mw-a2r" id="iTi-TG-D7S"/>
+                <outlet property="thumbImageView" destination="eep-Wg-PdF" id="FQy-Q6-IfP"/>
+            </connections>
             <point key="canvasLocation" x="433" y="310.5"/>
         </tableViewCell>
     </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
 </document>

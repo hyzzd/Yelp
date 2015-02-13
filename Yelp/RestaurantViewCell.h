@@ -10,4 +10,6 @@
 
 @interface RestaurantViewCell : UITableViewCell
 
+- (void)setBusinessData:(NSDictionary *)businessData;
+
 @end

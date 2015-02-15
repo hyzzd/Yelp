@@ -24,7 +24,7 @@
 @implementation BusinessCell
 
 - (void)awakeFromNib {
-    self.thumbImageView.layer.cornerRadius = 3;
+    self.thumbImageView.layer.cornerRadius = 5;
     self.thumbImageView.clipsToBounds = YES;
 }
 

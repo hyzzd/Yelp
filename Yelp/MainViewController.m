@@ -11,6 +11,7 @@
 #import "Business.h"
 #import "BusinessCell.h"
 #import "SVProgressHUD.h"
+#import "FiltersViewController.h"
 
 NSString * const kYelpConsumerKey = @"-6pfJLti5emvMGEXT_KCHw";
 NSString * const kYelpConsumerSecret = @"jldy5n1-aFH8oT6kUPaFt-nlXYI";
@@ -53,7 +54,7 @@ NSString * const kYelpTokenSecret = @"fcCaYeNRmUvYB7uZ7--23v72lG4";
         // You can register for Yelp API keys here: http://www.yelp.com/developers/manage_api_keys
         self.client = [[YelpClient alloc] initWithConsumerKey:kYelpConsumerKey consumerSecret:kYelpConsumerSecret accessToken:kYelpToken accessSecret:kYelpTokenSecret];
 
-        [self searchForTerm:@"Thai"];
+        [self searchForTerm:@"Food"];
     }
 
     return self;
@@ -69,7 +70,7 @@ NSString * const kYelpTokenSecret = @"fcCaYeNRmUvYB7uZ7--23v72lG4";
 
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStylePlain target:self action:@selector(onFilterButton)];
 
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Search" style:UIBarButtonItemStylePlain target:self action:@selector(onSearchButton)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Search" style:UIBarButtonItemStyleDone target:self action:@selector(onSearchButton)];
 
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -93,7 +94,9 @@ NSString * const kYelpTokenSecret = @"fcCaYeNRmUvYB7uZ7--23v72lG4";
 #pragma mark - Private methods
 
 - (void)onFilterButton {
-    
+    FiltersViewController *vc = [[FiltersViewController alloc] init];
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
+    [self presentViewController:nvc animated:YES completion:nil];
 }
 
 - (void)onSearchButton {

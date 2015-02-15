@@ -10,6 +10,7 @@
 #import "YelpClient.h"
 #import "Business.h"
 #import "BusinessCell.h"
+#import "SVProgressHUD.h"
 
 NSString * const kYelpConsumerKey = @"-6pfJLti5emvMGEXT_KCHw";
 NSString * const kYelpConsumerSecret = @"jldy5n1-aFH8oT6kUPaFt-nlXYI";
@@ -31,13 +32,17 @@ NSString * const kYelpTokenSecret = @"fcCaYeNRmUvYB7uZ7--23v72lG4";
 @implementation MainViewController
 
 - (void)searchForTerm:(NSString *)term {
+    [SVProgressHUD showWithStatus:@"Loading..."];
+
     [self.client searchWithTerm:term success:^(AFHTTPRequestOperation *operation, id response) {
 //        NSLog(@"response: %@", response);
         self.data = response;
         self.businesses = [Business businessesWithDictionaries:self.data[@"businesses"]];
         [self.tableView reloadData];
+        [SVProgressHUD dismiss];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"error: %@", [error description]);
+        [SVProgressHUD dismiss];
     }];
 }
 
@@ -62,6 +67,8 @@ NSString * const kYelpTokenSecret = @"fcCaYeNRmUvYB7uZ7--23v72lG4";
     self.searchBar.delegate = self;
     self.navigationItem.titleView = self.searchBar;
 
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStylePlain target:self action:@selector(onFilterButton)];
+
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Search" style:UIBarButtonItemStylePlain target:self action:@selector(onSearchButton)];
 
     self.tableView.dataSource = self;
@@ -84,6 +91,10 @@ NSString * const kYelpTokenSecret = @"fcCaYeNRmUvYB7uZ7--23v72lG4";
 }
 
 #pragma mark - Private methods
+
+- (void)onFilterButton {
+    
+}
 
 - (void)onSearchButton {
     NSString *searchText = self.searchBar.text;

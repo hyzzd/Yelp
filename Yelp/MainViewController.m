@@ -16,7 +16,7 @@ NSString * const kYelpConsumerSecret = @"jldy5n1-aFH8oT6kUPaFt-nlXYI";
 NSString * const kYelpToken = @"vIicZYAsuZJZWGtfNKPP_F9SOyB1AE-0";
 NSString * const kYelpTokenSecret = @"fcCaYeNRmUvYB7uZ7--23v72lG4";
 
-@interface MainViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface MainViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -24,9 +24,22 @@ NSString * const kYelpTokenSecret = @"fcCaYeNRmUvYB7uZ7--23v72lG4";
 @property (strong, nonatomic) NSDictionary *data;
 @property (strong, nonatomic) NSArray *businesses;
 
+@property (strong, nonatomic) UISearchBar *searchBar;
+
 @end
 
 @implementation MainViewController
+
+- (void)searchForTerm:(NSString *)term {
+    [self.client searchWithTerm:term success:^(AFHTTPRequestOperation *operation, id response) {
+//        NSLog(@"response: %@", response);
+        self.data = response;
+        self.businesses = [Business businessesWithDictionaries:self.data[@"businesses"]];
+        [self.tableView reloadData];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"error: %@", [error description]);
+    }];
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -35,14 +48,7 @@ NSString * const kYelpTokenSecret = @"fcCaYeNRmUvYB7uZ7--23v72lG4";
         // You can register for Yelp API keys here: http://www.yelp.com/developers/manage_api_keys
         self.client = [[YelpClient alloc] initWithConsumerKey:kYelpConsumerKey consumerSecret:kYelpConsumerSecret accessToken:kYelpToken accessSecret:kYelpTokenSecret];
 
-        [self.client searchWithTerm:@"Thai" success:^(AFHTTPRequestOperation *operation, id response) {
-            NSLog(@"response: %@", response);
-            self.data = response;
-            self.businesses = [Business businessesWithDictionaries:self.data[@"businesses"]];
-            [self.tableView reloadData];
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"error: %@", [error description]);
-        }];
+        [self searchForTerm:@"Thai"];
     }
 
     return self;
@@ -51,6 +57,12 @@ NSString * const kYelpTokenSecret = @"fcCaYeNRmUvYB7uZ7--23v72lG4";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"Yelp";
+
+    self.searchBar = [[UISearchBar alloc] init];
+    self.searchBar.delegate = self;
+    self.navigationItem.titleView = self.searchBar;
+
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Search" style:UIBarButtonItemStylePlain target:self action:@selector(onSearchButton)];
 
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -69,6 +81,13 @@ NSString * const kYelpTokenSecret = @"fcCaYeNRmUvYB7uZ7--23v72lG4";
     BusinessCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BusinessCell" forIndexPath:indexPath];
     cell.business = self.businesses[indexPath.row];
     return cell;
+}
+
+#pragma mark - Private methods
+
+- (void)onSearchButton {
+    NSString *searchText = self.searchBar.text;
+    [self searchForTerm:searchText];
 }
 
 @end

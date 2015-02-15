@@ -22,9 +22,12 @@ const CGFloat MILES_PER_METER = 0.000621371192;
         self.ratingImageUrl = dictionary[@"rating_img_url"];
         self.numReviews = [dictionary[@"review_count"] integerValue];
 
-        NSString *street = [dictionary valueForKeyPath:@"location.address"][0];
-        NSString *neighborhood = [dictionary valueForKeyPath:@"location.neighborhoods"][0];
-        self.address = [NSString stringWithFormat:@"%@, %@", street, neighborhood];
+        NSArray *addresses = [dictionary valueForKeyPath:@"location.address"];
+        NSArray *neighborhoods = [dictionary valueForKeyPath:@"location.neighborhoods"];
+
+        NSString *street = addresses.count > 0 ? addresses[0] : @"";
+        NSString *additional = neighborhoods.count > 0 ? neighborhoods[0] : [dictionary valueForKeyPath:@"location.city"];
+        self.address = [NSString stringWithFormat:@"%@, %@", street, additional];
 
         NSArray *doubleCategories = dictionary[@"categories"];
         NSMutableArray *categories = [NSMutableArray array];

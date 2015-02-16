@@ -12,7 +12,6 @@
 @interface FiltersViewController () <UITableViewDataSource, UITableViewDelegate, FilterCellDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (readonly, nonatomic) NSDictionary *filters;
 @property (strong, nonatomic) NSArray *categories;
 @property (strong, nonatomic) NSMutableArray *categoryOn;
 
@@ -24,7 +23,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 
     if (self) {
-        self.categories = @[@{@"name": @"American (Traditional)", @"code": @"newamerican"}, @{@"name": @"Chinese", @"code": @"chinese"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}];
+        self.categories = @[@{@"name": @"American (Traditional)", @"code": @"newamerican"}, @{@"name": @"Chinese", @"code": @"chinese"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}];
         self.categoryOn = [NSMutableArray array];
 
         for (int i = 0; i < self.categories.count; i++) {
@@ -67,8 +66,7 @@
 
 - (void)filterCell:(FilterCell *)filterCell didChangeValue:(BOOL)value {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:filterCell];
-    self.categoryOn[indexPath.row] = @(filterCell.on);
-    NSLog(@"Cell %ld changed value to %d", indexPath.row, value);
+    self.categoryOn[indexPath.row] = @(value);
 }
 
 #pragma mark - Private methods
@@ -78,7 +76,21 @@
 }
 
 - (void)onFilterButton {
-    [self.delegate filtersViewController:self didChangeFilters:self.filters];
+    NSMutableDictionary *filters = [NSMutableDictionary dictionary];
+    NSMutableArray *categoryCodes = [NSMutableArray array];
+
+    if (self.categories.count > 0) {
+        for (int i = 0; i < self.categories.count; i++) {
+            if ([self.categoryOn[i] boolValue]) {
+                [categoryCodes addObject:self.categories[i][@"code"]];
+            }
+        }
+
+        NSString *categoryString = [categoryCodes componentsJoinedByString:@","];
+        [filters setObject:categoryString forKey:@"category_filter"];
+    }
+
+    [self.delegate filtersViewController:self didChangeFilters:filters];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

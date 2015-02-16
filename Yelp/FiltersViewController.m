@@ -80,6 +80,9 @@ static const float MILES_PER_METER = 0.000621371192;
     [self.tableView registerNib:[UINib nibWithNibName:@"SortCell" bundle:nil] forCellReuseIdentifier:@"SortCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"DistanceCell" bundle:nil] forCellReuseIdentifier:@"DistanceCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"FilterCell" bundle:nil] forCellReuseIdentifier:@"FilterCell"];
+
+    self.tableView.sectionHeaderHeight = 35;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
 #pragma mark - Table view methods
@@ -108,6 +111,12 @@ static const float MILES_PER_METER = 0.000621371192;
     }
 }
 
+- (void)styleTableCell:(UITableViewCell *)cell {
+//    [cell.contentView.layer setBorderColor:[[UIColor lightGrayColor] CGColor]];
+//    [cell.contentView.layer setBorderWidth:1.0];
+//    cell.contentView.layer.cornerRadius = 5;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger section = indexPath.section;
 
@@ -115,23 +124,27 @@ static const float MILES_PER_METER = 0.000621371192;
         SortCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SortCell" forIndexPath:indexPath];
         cell.segmentedControl.selectedSegmentIndex = self.sortSelection;
         cell.delegate = self;
+        [self styleTableCell:cell];
         return cell;
     } else if (section == 1) {
         DistanceCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DistanceCell" forIndexPath:indexPath];
         cell.segmentedControl.selectedSegmentIndex = self.distanceSelection;
         cell.delegate = self;
+        [self styleTableCell:cell];
         return cell;
     } else if (section == 2) {
         FilterCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FilterCell" forIndexPath:indexPath];
         [cell setFilterText:@"Offering a Deal"];
         cell.on = self.dealsFilter;
         cell.delegate = self;
+        [self styleTableCell:cell];
         return cell;
     } else {
         FilterCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FilterCell" forIndexPath:indexPath];
         [cell setFilterText:self.categories[indexPath.row][@"name"]];
         cell.on = [self.categoryOn[indexPath.row] boolValue];
         cell.delegate = self;
+        [self styleTableCell:cell];
         return cell;
     }
 }

@@ -29,10 +29,6 @@
     [self.delegate filterCell:self didChangeValue:self.filterSwitch.on];
 }
 
-- (BOOL)on {
-    return self.filterSwitch.on;
-}
-
 - (void)setOn:(BOOL)on {
     _on = on;
     self.filterSwitch.on = on;

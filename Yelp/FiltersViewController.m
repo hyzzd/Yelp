@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (readonly, nonatomic) NSDictionary *filters;
 @property (strong, nonatomic) NSArray *categories;
+@property (strong, nonatomic) NSMutableArray *categoryOn;
 
 @end
 
@@ -24,7 +25,13 @@
 
     if (self) {
         self.categories = @[@{@"name": @"American (Traditional)", @"code": @"newamerican"}, @{@"name": @"Chinese", @"code": @"chinese"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}];
-        NSLog(@"Count: %ld", self.categories.count);
+        self.categoryOn = [NSMutableArray array];
+
+        for (int i = 0; i < self.categories.count; i++) {
+            [self.categoryOn addObject:@(NO)];
+        }
+
+        [self.tableView reloadData];
     }
 
     return self;
@@ -45,13 +52,12 @@
 #pragma mark - Table view methods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSLog(@"%ld cells", self.categories.count);
     return self.categories.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     FilterCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FilterCell" forIndexPath:indexPath];
-    cell.on = NO;
+    cell.on = [self.categoryOn[indexPath.row] boolValue];
     [cell setFilterText:self.categories[indexPath.row][@"name"]];
     cell.delegate = self;
     return cell;
@@ -60,7 +66,9 @@
 #pragma mark - FilterCell delegate methods
 
 - (void)filterCell:(FilterCell *)filterCell didChangeValue:(BOOL)value {
-
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:filterCell];
+    self.categoryOn[indexPath.row] = @(filterCell.on);
+    NSLog(@"Cell %ld changed value to %d", indexPath.row, value);
 }
 
 #pragma mark - Private methods

@@ -37,7 +37,6 @@ NSString * const kYelpTokenSecret = @"fcCaYeNRmUvYB7uZ7--23v72lG4";
     [SVProgressHUD showWithStatus:@"Loading..."];
 
     [self.client searchWithTerm:term withParams:params success:^(AFHTTPRequestOperation *operation, id response) {
-//        NSLog(@"response: %@", response);
         self.data = response;
         self.businesses = [Business businessesWithDictionaries:self.data[@"businesses"]];
         [self.tableView reloadData];
@@ -99,7 +98,6 @@ NSString * const kYelpTokenSecret = @"fcCaYeNRmUvYB7uZ7--23v72lG4";
 #pragma mark - FiltersViewController delegate methods
 
 - (void)filtersViewController:(FiltersViewController *)filtersViewController didChangeFilters:(NSDictionary *)filters {
-    NSLog(@"Should make a network call here");
     [self searchForTerm:self.searchText withParams:filters];
 }
 

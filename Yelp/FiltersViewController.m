@@ -13,6 +13,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSArray *categories;
+@property (assign, nonatomic) BOOL dealsFilter;
 @property (strong, nonatomic) NSMutableArray *categoryOn;
 
 @end
@@ -50,6 +51,7 @@
             [self.categoryOn addObject:@(NO)];
         }
 
+        self.dealsFilter = NO;
         [self.tableView reloadData];
     }
 
@@ -70,23 +72,63 @@
 
 #pragma mark - Table view methods
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 4;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        return @"Sort";
+    } else if (section == 1) {
+        return @"Distance";
+    } else if (section == 2) {
+        return @"Deals";
+    } else {
+        return @"Categories";
+    }
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.categories.count;
+    if (section < 3) {
+        return 1;
+    } else {
+        return self.categories.count;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    FilterCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FilterCell" forIndexPath:indexPath];
-    cell.on = [self.categoryOn[indexPath.row] boolValue];
-    [cell setFilterText:self.categories[indexPath.row][@"name"]];
-    cell.delegate = self;
-    return cell;
+    NSInteger section = indexPath.section;
+
+    if (section == 0) {
+        return [[UITableViewCell alloc] init];
+    } else if (section == 1) {
+        return [[UITableViewCell alloc] init];
+    } else if (section == 2) {
+        FilterCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FilterCell" forIndexPath:indexPath];
+        [cell setFilterText:@"Offering a Deal"];
+        cell.on = self.dealsFilter;
+        cell.delegate = self;
+        return cell;
+    } else {
+        FilterCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FilterCell" forIndexPath:indexPath];
+        [cell setFilterText:self.categories[indexPath.row][@"name"]];
+        cell.on = [self.categoryOn[indexPath.row] boolValue];
+        cell.delegate = self;
+        return cell;
+    }
 }
 
 #pragma mark - FilterCell delegate methods
 
 - (void)filterCell:(FilterCell *)filterCell didChangeValue:(BOOL)value {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:filterCell];
-    self.categoryOn[indexPath.row] = @(value);
+    NSInteger section = indexPath.section;
+
+    if (section == 2) {
+        self.dealsFilter = value;
+    } else {
+        self.categoryOn[indexPath.row] = @(value);
+    }
 }
 
 #pragma mark - Private methods
@@ -108,6 +150,10 @@
 
         NSString *categoryString = [categoryCodes componentsJoinedByString:@","];
         [filters setObject:categoryString forKey:@"category_filter"];
+    }
+
+    if (self.dealsFilter) {
+        [filters setObject:@"1" forKey:@"deals_filter"];
     }
 
     [self.delegate filtersViewController:self didChangeFilters:filters];

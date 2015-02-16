@@ -23,5 +23,4 @@ Time spent: `11 hours`
 
 ![Video Walkthrough](yelp_client.gif)
 
-
 Thanks to Sarat Tallamraju for suggestions on improving the UI.

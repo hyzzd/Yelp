@@ -81,7 +81,7 @@ static const float MILES_PER_METER = 0.000621371192;
     [self.tableView registerNib:[UINib nibWithNibName:@"DistanceCell" bundle:nil] forCellReuseIdentifier:@"DistanceCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"FilterCell" bundle:nil] forCellReuseIdentifier:@"FilterCell"];
 
-    self.tableView.sectionHeaderHeight = 35;
+//    self.tableView.sectionHeaderHeight = 35;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 

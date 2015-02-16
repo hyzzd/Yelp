@@ -16,6 +16,9 @@
                 <subviews>
                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" apportionsSegmentWidthsByContent="YES" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="4UA-ZT-nKk">
                         <rect key="frame" x="34.5" y="8" width="252" height="29"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="252" id="AtD-Oe-7zD"/>
+                        </constraints>
                         <segments>
                             <segment title="Best Match"/>
                             <segment title="Distance"/>

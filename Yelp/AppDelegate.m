@@ -13,8 +13,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    UIColor *yelpRed = [UIColor colorWithRed:190.0/255 green:12.0/255 blue:3.0/255 alpha:1];
+
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:207.0/256 green:24.0/256 blue:6.0/256 alpha:1]];
+    [[UINavigationBar appearance] setBarTintColor:yelpRed];
+    [[UISegmentedControl appearance] setTintColor:yelpRed];
+    [[UISwitch appearance] setOnTintColor:yelpRed];
 
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[MainViewController alloc] init]];

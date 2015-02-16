@@ -11,7 +11,7 @@
 
 @implementation Business
 
-const CGFloat MILES_PER_METER = 0.000621371192;
+static const float MILES_PER_METER = 0.000621371192;
 
 - (id)initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];

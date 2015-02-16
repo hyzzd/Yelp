@@ -16,7 +16,7 @@
 @property (assign, nonatomic) NSInteger numReviews;
 @property (strong, nonatomic) NSString *address;
 @property (strong, nonatomic) NSString *categories;
-@property (assign, nonatomic) CGFloat distance;
+@property (assign, nonatomic) float distance;
 
 + (NSArray *)businessesWithDictionaries:(NSArray *)dictionaries;
 

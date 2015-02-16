@@ -8,17 +8,23 @@
 
 #import "FiltersViewController.h"
 #import "FilterCell.h"
+#import "SortCell.h"
+#import "DistanceCell.h"
 
-@interface FiltersViewController () <UITableViewDataSource, UITableViewDelegate, FilterCellDelegate>
+@interface FiltersViewController () <UITableViewDataSource, UITableViewDelegate, SortCellDelegate, DistanceCellDelegate, FilterCellDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSArray *categories;
+@property (assign, nonatomic) NSInteger sortSelection;
+@property (assign, nonatomic) NSInteger distanceSelection;
 @property (assign, nonatomic) BOOL dealsFilter;
 @property (strong, nonatomic) NSMutableArray *categoryOn;
 
 @end
 
 @implementation FiltersViewController
+
+static const float MILES_PER_METER = 0.000621371192;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -51,6 +57,8 @@
             [self.categoryOn addObject:@(NO)];
         }
 
+        self.sortSelection = 0;
+        self.distanceSelection = 0;
         self.dealsFilter = NO;
         [self.tableView reloadData];
     }
@@ -67,6 +75,8 @@
 
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+    [self.tableView registerNib:[UINib nibWithNibName:@"SortCell" bundle:nil] forCellReuseIdentifier:@"SortCell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"DistanceCell" bundle:nil] forCellReuseIdentifier:@"DistanceCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"FilterCell" bundle:nil] forCellReuseIdentifier:@"FilterCell"];
 }
 
@@ -100,9 +110,15 @@
     NSInteger section = indexPath.section;
 
     if (section == 0) {
-        return [[UITableViewCell alloc] init];
+        SortCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SortCell" forIndexPath:indexPath];
+        cell.segmentedControl.selectedSegmentIndex = self.sortSelection;
+        cell.delegate = self;
+        return cell;
     } else if (section == 1) {
-        return [[UITableViewCell alloc] init];
+        DistanceCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DistanceCell" forIndexPath:indexPath];
+        cell.segmentedControl.selectedSegmentIndex = self.distanceSelection;
+        cell.delegate = self;
+        return cell;
     } else if (section == 2) {
         FilterCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FilterCell" forIndexPath:indexPath];
         [cell setFilterText:@"Offering a Deal"];
@@ -116,6 +132,18 @@
         cell.delegate = self;
         return cell;
     }
+}
+
+#pragma mark - SortCell delegate methods
+
+- (void)sortCell:(SortCell *)sortCell didChangeSegment:(NSInteger)segment {
+    self.sortSelection = segment;
+}
+
+#pragma mark - DistanceCell delegate methods
+
+- (void)distanceCell:(DistanceCell *)cell didChangeSegment:(NSInteger)segment {
+    self.distanceSelection = segment;
 }
 
 #pragma mark - FilterCell delegate methods
@@ -139,21 +167,29 @@
 
 - (void)onFilterButton {
     NSMutableDictionary *filters = [NSMutableDictionary dictionary];
-    NSMutableArray *categoryCodes = [NSMutableArray array];
+    [filters setObject:[NSString stringWithFormat:@"%ld", self.sortSelection] forKey:@"sort"];
 
-    if (self.categories.count > 0) {
-        for (int i = 0; i < self.categories.count; i++) {
-            if ([self.categoryOn[i] boolValue]) {
-                [categoryCodes addObject:self.categories[i][@"code"]];
-            }
-        }
-
-        NSString *categoryString = [categoryCodes componentsJoinedByString:@","];
-        [filters setObject:categoryString forKey:@"category_filter"];
+    if (self.distanceSelection > 0) {
+        float distanceInMiles = [@[@(0.0), @(0.3), @(1.0), @(5.0)][self.distanceSelection] floatValue];
+        float distanceInMeters = distanceInMiles / MILES_PER_METER;
+        [filters setObject:[NSString stringWithFormat:@"%.0f", distanceInMeters] forKey:@"radius_filter"];
     }
 
     if (self.dealsFilter) {
         [filters setObject:@"1" forKey:@"deals_filter"];
+    }
+
+    NSMutableArray *categoryCodes = [NSMutableArray array];
+
+    for (int i = 0; i < self.categories.count; i++) {
+        if ([self.categoryOn[i] boolValue]) {
+            [categoryCodes addObject:self.categories[i][@"code"]];
+        }
+    }
+
+    if (categoryCodes.count > 0) {
+        NSString *categoryString = [categoryCodes componentsJoinedByString:@","];
+        [filters setObject:categoryString forKey:@"category_filter"];
     }
 
     [self.delegate filtersViewController:self didChangeFilters:filters];

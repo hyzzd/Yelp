@@ -23,7 +23,27 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 
     if (self) {
-        self.categories = @[@{@"name": @"American (Traditional)", @"code": @"newamerican"}, @{@"name": @"Chinese", @"code": @"chinese"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}, @{@"name": @"Sushi Bars", @"code": @"sushi"}];
+        self.categories = @[@{@"name": @"American (New)", @"code": @"newamerican"},
+                            @{@"name": @"American (Traditional)", @"code": @"tradamerican"},
+                            @{@"name": @"Asian Fusion", @"code": @"asianfusion"},
+                            @{@"name": @"Barbeque", @"code": @"bbq"},
+                            @{@"name": @"Bars", @"code": @"bars"},
+                            @{@"name": @"Breakfast & Brunch", @"code": @"breakfast_brunch"},
+                            @{@"name": @"Burgers", @"code": @"burgers"},
+                            @{@"name": @"Chinese", @"code": @"chinese"},
+                            @{@"name": @"Fast Food", @"code": @"hotdogs"},
+                            @{@"name": @"Indian", @"code": @"indpak"},
+                            @{@"name": @"Japanese", @"code": @"japanese"},
+                            @{@"name": @"Korean", @"code": @"korean"},
+                            @{@"name": @"Latin American", @"code": @"latin"},
+                            @{@"name": @"Mexican", @"code": @"mexican"},
+                            @{@"name": @"Pizza", @"code": @"pizza"},
+                            @{@"name": @"Sandwiches", @"code": @"sandwiches"},
+                            @{@"name": @"Seafood", @"code": @"seafood"},
+                            @{@"name": @"Sushi Bars", @"code": @"sushi"},
+                            @{@"name": @"Thai", @"code": @"thai"},
+                            @{@"name": @"Vietnamese", @"code": @"vietnamese"}];
+
         self.categoryOn = [NSMutableArray array];
 
         for (int i = 0; i < self.categories.count; i++) {

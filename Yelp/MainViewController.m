@@ -18,7 +18,7 @@ NSString * const kYelpConsumerSecret = @"jldy5n1-aFH8oT6kUPaFt-nlXYI";
 NSString * const kYelpToken = @"vIicZYAsuZJZWGtfNKPP_F9SOyB1AE-0";
 NSString * const kYelpTokenSecret = @"fcCaYeNRmUvYB7uZ7--23v72lG4";
 
-@interface MainViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
+@interface MainViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, FiltersViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -79,6 +79,11 @@ NSString * const kYelpTokenSecret = @"fcCaYeNRmUvYB7uZ7--23v72lG4";
     self.tableView.rowHeight = UITableViewAutomaticDimension;
 }
 
+// Note: this is a bit of a hack to fix a UI bug where the table cells get squished after coming back from the FiltersViewController.
+- (void)viewWillAppear:(BOOL)animated {
+    [self.tableView reloadData];
+}
+
 #pragma mark - Table view methods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -91,10 +96,17 @@ NSString * const kYelpTokenSecret = @"fcCaYeNRmUvYB7uZ7--23v72lG4";
     return cell;
 }
 
+#pragma mark - FiltersViewController delegate methods
+
+- (void)filtersViewController:(FiltersViewController *)filtersViewController didChangeFilters:(NSDictionary *)filters {
+    NSLog(@"Should make a network call here");
+}
+
 #pragma mark - Private methods
 
 - (void)onFilterButton {
     FiltersViewController *vc = [[FiltersViewController alloc] init];
+    vc.delegate = self;
     UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
     [self presentViewController:nvc animated:YES completion:nil];
 }
